@@ -49,3 +49,6 @@ notes/*.tf
 
 # Python virtual environment (spiceypy for the reference script)
 .venv/
+
+# Personal daily reports (local only)
+reportes/
