@@ -4,10 +4,10 @@ One entry per AI-assisted step: date, tool, what was asked, what was produced, a
 
 ## Before Nov 14 (to complete)
 
-| Date | Tool     | Request                                                    | Result                                                                       | Human check |
-| ---- | -------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------- |
-| TODO | DeepSeek | Code to compute Sun/Earth altitude with SPICE              | Code fixed by hand to run; matched validation within 0.00037 deg at (-85, 0) | TODO        |
-| TODO | TODO     | `build_reference_v2.py` / `notes/reference_altitudes.json` | 32-row SPICE reference table                                                 | TODO        |
+| Date       | Tool                     | Request                                                                  | Result                                                                                        | Human check                                                                                                     |
+| ---------- | ------------------------ | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| TODO       | DeepSeek                 | Code to compute Sun/Earth altitude with SPICE                            | Code fixed by hand to run; matched validation within 0.00037 deg at (-85, 0)                  | TODO                                                                                                            |
+| 2026-11-12 | Claude (sandbox session) | Build the 32-row SPICE reference table (`scripts/build_reference_v3.py`) | `notes/reference_altitudes.json`, 4 sites, MOON_ME, sphere 1737.4 km, kernel SHA-256 recorded | User reviewed the sites and decided the candidate-region centres, Shackleton network 3, and tolerance 0.005 deg |
 
 ## 2026-11-14 – Claude Code (Claude Opus 5.5)
 
