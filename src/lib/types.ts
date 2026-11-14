@@ -18,6 +18,27 @@ export type AltitudeSample = {
   readonly earthAltDeg: number;
 };
 
+/** What to compare: which sites, over which UTC range, and the altitude thresholds. */
+export type Scenario = {
+  readonly siteIds: readonly string[];
+  readonly startUtc: string; // ISO 8601, UTC
+  readonly endUtc: string; // ISO 8601, UTC
+  readonly stepMinutes: number;
+  readonly minSunAltDeg: number; // Sun counts as usable for power at or above this
+  readonly minEarthAltDeg: number; // Earth counts as visible for comms at or above this
+};
+
+/**
+ * A continuous interval where the Sun (power) or Earth (comms) is at or above
+ * its threshold. Not named `Window` to avoid clashing with the DOM global.
+ */
+export type VisibilityWindow = {
+  readonly siteId: string;
+  readonly kind: "sun" | "earth";
+  readonly startUtc: string; // ISO 8601, UTC
+  readonly endUtc: string; // ISO 8601, UTC
+};
+
 export class InvalidInputError extends Error {
   constructor(message: string) {
     super(message);
