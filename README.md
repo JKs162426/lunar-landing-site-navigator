@@ -66,14 +66,15 @@ The 200-case check used 150 south-polar sites (latitude −90° to −80°) and 
 - `pck/moon_pa_de440_200625.bpc`
 - `fk/satellites/moon_de440_250416.tf`
 
-Then install spiceypy:
+Then install spiceypy and run the generator script, [`scripts/build_reference_v3.py`](scripts/build_reference_v3.py):
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install spiceypy==8.4.0
+.venv/bin/python scripts/build_reference_v3.py   # overwrites notes/reference_altitudes.json
 ```
 
-The script that generated the table (`build_reference_v2.py`) is not in the repository yet.
+Re-running it reproduces all 32 rows, the sites and the kernel hashes exactly. Only `generated_utc` and the formatting change, so run `npm run format` afterwards.
 
 ## Sites
 
@@ -97,4 +98,5 @@ All four are provisional. Sources and open items are listed in the reference fil
 
 - `src/app` – Next.js pages
 - `src/lib` – pure calculation code and its tests
+- `scripts/` – SPICE reference table generator (Python, not part of the app)
 - `notes/` – reference data, research notes and the [AI usage log](notes/ai-usage-log.md)
