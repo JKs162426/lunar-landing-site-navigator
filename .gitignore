@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# SPICE kernels (large binary/reference data, not source)
+notes/*.tls
+notes/*.tpc
+notes/*.bsp
+notes/*.bpc
+notes/*.tf
+
+# Python virtual environment (spiceypy for the reference script)
+.venv/
