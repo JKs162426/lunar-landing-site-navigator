@@ -39,6 +39,15 @@ export type VisibilityWindow = {
   readonly endUtc: string; // ISO 8601, UTC
 };
 
+/** Per-site summary over a scenario's range. Fractions are of total time, 0..1. */
+export type SiteScore = {
+  readonly siteId: string;
+  readonly sunFraction: number;
+  readonly earthFraction: number;
+  readonly bothFraction: number; // Sun and Earth above threshold at the same time
+  readonly longestNightHours: number; // longest stretch without Sun, clipped to the range
+};
+
 export class InvalidInputError extends Error {
   constructor(message: string) {
     super(message);
