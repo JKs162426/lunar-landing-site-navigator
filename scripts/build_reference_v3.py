@@ -1,8 +1,9 @@
 """Validation-only: SPICE reference table v2 (MOON_ME frame, sphere 1737.4 km, LT correction not applied to site vector)."""
 import json, math, hashlib, datetime
+from pathlib import Path
 import spiceypy as sp
 
-NOTES = "/mnt/user-data/uploads/Documents/proyectos/lunar-landing-site-navigator/notes"
+NOTES = Path(__file__).resolve().parent.parent / "notes"
 KERNELS = ["naif0012.tls", "pck00011.tpc", "de440.bsp", "moon_pa_de440_200625.bpc", "moon_de440_250416.tf"]
 for k in KERNELS:
     sp.furnsh(f"{NOTES}/{k}")
@@ -76,7 +77,7 @@ out = {
             "Mission confirmation of tolerance and frame not received from NASA."
         ],
         "tolerance_status": "DECIDED by project; not NASA-confirmed",
-        "generator_script": "build_reference_v2.py (scratchpad, not in repo yet)",
+        "generator_script": "scripts/build_reference_v3.py",
     },
     "sites": SITES,
     "rows": rows,
