@@ -14,9 +14,12 @@
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "astronomy-engine": "2.1.19",
     "next": "16.4.6",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "react-is": "19.3.0",
+    "recharts": "3.10.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "4.3.3",
