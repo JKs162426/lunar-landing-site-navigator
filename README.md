@@ -159,17 +159,17 @@ All four are provisional. Sources and open items are listed in the reference fil
 
 ## Use of AI
 
-AI tools helped write this project. The author directed the work and made the key decisions:
+AI tools wrote most of the code and did the calculations in this project. The author is not a mathematician and did not do the calculations by hand. The author directed the work: read and learned about each step, asked the AI to explain what was being done, confirmed the next step, and made the project decisions:
 
-- the calculation method, which the author had already measured against SPICE before asking an AI to implement it;
+- the calculation method (Sun and Earth vectors rotated into the lunar frame), after it had been checked against SPICE;
 - the reference frame, the sites and the 0.005° tolerance;
 - the scoring metric and the defaults.
 
-| Tool                          | What it did                                                                                                                                                                    |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| DeepSeek                      | First draft of the SPICE calculation. The author fixed it by hand until it ran, and checked it against a second implementation (0.00037° apart).                               |
-| Claude (sandbox session)      | The script that builds the SPICE reference table, [`scripts/build_reference_v3.py`](scripts/build_reference_v3.py). The author reviewed and chose the sites and the tolerance. |
-| Claude Code (Claude Opus 5.5) | The TypeScript calculation, windows, scoring, comparison and user interface, the tests, this README and the Vercel setup, step by step at the author's request.                |
+| Tool                          | What it did                                                                                                                                                                                                                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| DeepSeek                      | First draft of the SPICE calculation. It did not run at first; three bugs (including a missing kernel and a body ID used where a name was expected) were fixed with the AI's explanations. Its output then matched a second, independent SPICE implementation within 0.00037°. |
+| Claude (sandbox session)      | The script that builds the SPICE reference table, [`scripts/build_reference_v3.py`](scripts/build_reference_v3.py). The author reviewed and chose the sites and the tolerance.                                                                                                 |
+| Claude Code (Claude Opus 5.5) | The TypeScript calculation, windows, scoring, comparison and user interface, the tests, this README and the Vercel setup, step by step at the author's request.                                                                                                                |
 
 All AI-written calculation code is checked by tests against an independent reference generated with NASA/JPL SPICE. Every step, with what was asked and what a human checked, is in [`notes/ai-usage-log.md`](notes/ai-usage-log.md).
 
