@@ -9,6 +9,12 @@ describe("SITES", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
+  it("flags the Shackleton crater centre as shadowed in reality", () => {
+    const shackleton = getSite("shackleton_rim");
+    expect(shackleton.name).toBe("Shackleton crater centre");
+    expect(shackleton.note).toContain("permanent shadow");
+  });
+
   it("every site has valid latitude and longitude", () => {
     for (const s of SITES) {
       expect(() => assertLatLon(s.latDeg, s.lonDeg)).not.toThrow();

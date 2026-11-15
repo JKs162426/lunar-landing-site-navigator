@@ -10,7 +10,7 @@ const R = C - 24;
 
 // Hand-placed labels so the close Malapert/Haworth pair does not overlap.
 const LABEL: Record<string, { dx: number; dy: number; anchor: "start" | "end" | "middle" }> = {
-  shackleton_rim: { dx: 8, dy: 3, anchor: "start" },
+  shackleton_rim: { dx: 0, dy: 16, anchor: "middle" },
   malapert_candidate: { dx: 8, dy: 3, anchor: "start" },
   haworth_candidate: { dx: -8, dy: 3, anchor: "end" },
   peak_near_cabeus_b_candidate: { dx: 0, dy: 16, anchor: "middle" },

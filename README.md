@@ -4,7 +4,7 @@ NASA Space Apps Challenge 2026 project. It compares candidate landing sites near
 
 **Live app:** https://lunar-landing-site-navigator-indol.vercel.app
 
-![Ranking and altitude charts for Malapert Massif, Haworth and Shackleton over 30 days](docs/screenshots/desktop.png)
+![Ranking and altitude charts for Malapert Massif, Haworth and the Shackleton crater centre over 30 days](docs/screenshots/desktop.png)
 
 ## The problem
 
@@ -32,13 +32,13 @@ Every comparison is a shareable URL. For example, Malapert Massif and Haworth ov
 /?site=malapert_candidate&site=haworth_candidate&start=2026-11-15&days=365&sun=1&earth=0
 ```
 
-| Parameter | Values                                 | Default                                   |
-| --------- | -------------------------------------- | ----------------------------------------- |
-| `site`    | 2 or 3 site ids (repeat the parameter) | Shackleton, Malapert Massif, Haworth      |
-| `start`   | `YYYY-MM-DD`, UTC                      | today                                     |
-| `days`    | `7`, `30`, `90`, `365`                 | `30` (hourly samples; 6-hourly for `365`) |
-| `sun`     | −2 to 10 (degrees)                     | `0`                                       |
-| `earth`   | −2 to 10 (degrees)                     | `0`                                       |
+| Parameter | Values                                 | Default                                            |
+| --------- | -------------------------------------- | -------------------------------------------------- |
+| `site`    | 2 or 3 site ids (repeat the parameter) | Shackleton crater centre, Malapert Massif, Haworth |
+| `start`   | `YYYY-MM-DD`, UTC                      | today                                              |
+| `days`    | `7`, `30`, `90`, `365`                 | `30` (hourly samples; 6-hourly for `365`)          |
+| `sun`     | −2 to 10 (degrees)                     | `0`                                                |
+| `earth`   | −2 to 10 (degrees)                     | `0`                                                |
 
 An invalid value falls back to its default, and the page shows a message saying so.
 
@@ -131,16 +131,17 @@ Re-running it reproduces all 32 rows, the sites and the kernel hashes exactly. O
 
 All four are provisional. Sources and open items are listed in the reference file.
 
-| Id                             | Latitude | Longitude | Source                                                         |
-| ------------------------------ | -------- | --------- | -------------------------------------------------------------- |
-| `shackleton_rim`               | −89.900° | 0.000°    | USGS Gazetteer, feature 5450 (control network 3)               |
-| `malapert_candidate`           | −85.987° | −0.237°   | Artemis III candidate region centre, USGS DOI 10.5066/P1MEQ6UK |
-| `peak_near_cabeus_b_candidate` | −83.651° | −68.726°  | Artemis III candidate region centre, USGS DOI 10.5066/P1MEQ6UK |
-| `haworth_candidate`            | −86.766° | −22.620°  | Artemis III candidate region centre, USGS DOI 10.5066/P1MEQ6UK |
+| Id                             | Latitude | Longitude | Source                                                                       |
+| ------------------------------ | -------- | --------- | ---------------------------------------------------------------------------- |
+| `shackleton_rim`               | −89.900° | 0.000°    | USGS Gazetteer, feature 5450 (control network 3); crater centre, not the rim |
+| `malapert_candidate`           | −85.987° | −0.237°   | Artemis III candidate region centre, USGS DOI 10.5066/P1MEQ6UK               |
+| `peak_near_cabeus_b_candidate` | −83.651° | −68.726°  | Artemis III candidate region centre, USGS DOI 10.5066/P1MEQ6UK               |
+| `haworth_candidate`            | −86.766° | −22.620°  | Artemis III candidate region centre, USGS DOI 10.5066/P1MEQ6UK               |
 
 ## Limitations
 
-- **Smooth sphere, no terrain.** Mountains and crater walls are not modelled, so a site may be in shadow, or have Earth blocked, when this model says otherwise. At the south pole, terrain strongly affects real illumination. For example, Shackleton has the Sun above the horizon 100% of the time in this model.
+- **Smooth sphere, no terrain.** Mountains and crater walls are not modelled, so a site may be in shadow, or have Earth blocked, when this model says otherwise. At the south pole, terrain strongly affects real illumination.
+- **Shackleton is the crater centre, not the rim.** Its id is `shackleton_rim` for historical reasons, but the coordinates are the centre of Shackleton crater from the USGS Gazetteer. The real crater floor is in permanent shadow. This model has no crater walls, so it shows the Sun up 100% of the time there. The app labels the site "Shackleton crater centre" and shows this warning. Its Sun curve is almost flat because the point is 0.1° from the pole: the Moon's rotation moves the Sun around the horizon, not up and down. Only the lunar seasons change its height, by about ±1.5° over the year.
 - **IAU rotation model.** The app's lunar frame differs from SPICE's `MOON_ME` by up to about 0.004° in altitude.
 - **Not NASA-confirmed.** The 0.005° tolerance and the choice of frame are project decisions.
 - **Haworth.** The candidate region does not contain the crater centre. Whether to use the region or the crater is still open.

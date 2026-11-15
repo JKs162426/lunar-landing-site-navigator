@@ -169,6 +169,13 @@ export async function Navigator({ searchParams }: { searchParams: SearchParams }
           <div className="mt-4 overflow-x-auto">
             <ScoreTable results={results} />
           </div>
+          {results
+            .filter((r) => r.site.note)
+            .map((r) => (
+              <p key={r.site.id} className="mt-3 text-xs text-muted">
+                <span className="text-danger">†</span> {displayName(r.site)}: {r.site.note}
+              </p>
+            ))}
         </div>
 
         {results.map((r, i) => (
@@ -182,6 +189,11 @@ export async function Navigator({ searchParams }: { searchParams: SearchParams }
                 {coords(r.site.latDeg, r.site.lonDeg)} · step {stepMinutesFor(form.days) / 60} h
               </p>
             </div>
+            {r.site.note && (
+              <p className="mb-2 text-xs text-danger">
+                † Read the note under the ranking before trusting this chart.
+              </p>
+            )}
             <AltitudeChart
               samples={r.samples}
               sunWindows={r.sunWindows}
@@ -231,6 +243,11 @@ function ScoreTable({ results }: { results: readonly SiteComparison[] }) {
             <th scope="row" className="px-3 py-2.5 text-left text-sm font-normal">
               <span className="mr-2 font-mono text-muted">{i + 1}</span>
               {displayName(site)}
+              {site.note && (
+                <sup className="ml-0.5 text-danger" aria-label="see note below">
+                  †
+                </sup>
+              )}
               {i === 0 && (
                 <span className="ml-2 rounded-sm border border-regolith/40 px-1.5 py-0.5 text-[11px] uppercase tracking-wide text-regolith">
                   Best

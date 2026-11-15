@@ -10,6 +10,7 @@ export type Site = {
   readonly latDeg: number;
   readonly lonDeg: number;
   readonly source: string;
+  readonly note?: string; // caveat shown next to the site in the UI
 };
 
 export type AltitudeSample = {

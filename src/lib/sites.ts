@@ -7,10 +7,12 @@ import { assertLatLon, type Site } from "./types";
 export const SITES: readonly Site[] = [
   {
     id: "shackleton_rim",
-    name: "Shackleton",
+    // The id says "rim" for historical reasons; the coordinates are the crater centre.
+    name: "Shackleton crater centre",
     latDeg: -89.9,
     lonDeg: 0.0,
     source: "USGS Gazetteer ID 5450, control network 3",
+    note: "This point is the centre of Shackleton crater. The real crater floor is in permanent shadow; this smooth-sphere model has no crater walls, so it shows the Sun as always up.",
   },
   {
     id: "malapert_candidate",
