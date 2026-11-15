@@ -14,7 +14,7 @@ This app shows, for each candidate site and date range, how much of the time the
 
 ## Using the app
 
-1. Pick 2 or 3 sites, a start date (UTC), a range (7 days, 30 days, 90 days or 1 year) and the minimum altitude for the Sun and for Earth to count. The defaults are 0° for both, which means the centre of the disc is on the horizon.
+1. Pick 1 to 4 sites, a start date (UTC), a range (7 days, 30 days, 90 days or 1 year) and the minimum altitude for the Sun and for Earth to count. The defaults are 0° for both, which means the centre of the disc is on the horizon.
 2. Press **Compare sites**.
 3. Read the **ranking table**:
    - **Sun:** share of the time with the Sun at or above its threshold.
@@ -24,7 +24,8 @@ This app shows, for each candidate site and date range, how much of the time the
 
    Sites are ranked by **Both**, then by the shorter longest night.
 
-4. Read the **charts**, one per site, all on the same vertical scale. The amber line is the Sun's altitude and the blue line is Earth's. Bars mark the windows above threshold: amber along the top for the Sun, blue along the bottom for Earth.
+4. If the Shackleton crater centre is selected, a red warning above the table explains that its Sun numbers are a model artefact. The **Best** label never goes to a site with a warning.
+5. Read the **charts**, one per site, all on the same vertical scale. The amber line is the Sun's altitude and the blue line is Earth's. Bars mark the windows above threshold: amber along the top for the Sun, blue along the bottom for Earth.
 
 Every comparison is a shareable URL. For example, Malapert Massif and Haworth over one year with a 1° Sun threshold:
 
@@ -34,7 +35,7 @@ Every comparison is a shareable URL. For example, Malapert Massif and Haworth ov
 
 | Parameter | Values                                 | Default                                            |
 | --------- | -------------------------------------- | -------------------------------------------------- |
-| `site`    | 2 or 3 site ids (repeat the parameter) | Shackleton crater centre, Malapert Massif, Haworth |
+| `site`    | 1 to 4 site ids (repeat the parameter) | Shackleton crater centre, Malapert Massif, Haworth |
 | `start`   | `YYYY-MM-DD`, UTC                      | today                                              |
 | `days`    | `7`, `30`, `90`, `365`                 | `30` (hourly samples; 6-hourly for `365`)          |
 | `sun`     | −2 to 10 (degrees)                     | `0`                                                |
@@ -97,6 +98,8 @@ The page runs all of this on the server. The browser only draws the result: the 
 ## Validation
 
 **Reference.** [`notes/reference_altitudes.json`](notes/reference_altitudes.json) holds 32 rows: 4 sites, Nov 14–15 2026, every 6 hours. They were generated with SPICE (spiceypy 8.4.0, CSPICE N0067) in the `MOON_ME` frame, on the same 1737.4 km sphere and without light-time correction. The file records the SHA-256 of each kernel.
+
+The live app recomputes the 32 reference cases and shows them, with the SPICE value, the app value and the difference, in the **Validation against NASA/JPL SPICE** section below the charts.
 
 **Tolerance: 0.005°** for both Sun and Earth altitude. This is a project decision and has not been confirmed by NASA. It is about 10 times the worst difference between two independent SPICE implementations of the same setup (0.00037°).
 

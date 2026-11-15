@@ -10,8 +10,8 @@ import { altitudeSeries, findWindows } from "./windows";
 
 export const DEFAULT_SITE_IDS = ["shackleton_rim", "malapert_candidate", "haworth_candidate"];
 export const RANGE_DAYS = [7, 30, 90, 365] as const;
-export const MIN_SITES = 2;
-export const MAX_SITES = 3;
+export const MIN_SITES = 1;
+export const MAX_SITES = SITES.length;
 export const THRESHOLD_MIN_DEG = -2;
 export const THRESHOLD_MAX_DEG = 10;
 
@@ -78,8 +78,9 @@ export function parseComparisonForm(
     if (known.length !== requested.length) {
       errors.push("Unknown site ignored.");
     }
-    if (known.length < MIN_SITES || known.length > MAX_SITES) {
-      errors.push(`Pick ${MIN_SITES} or ${MAX_SITES} sites; showing the default sites.`);
+    // Any non-empty selection is kept, so the user's choice is never lost.
+    if (known.length === 0) {
+      errors.push("No known site selected; showing the default sites.");
     } else {
       siteIds = known;
     }

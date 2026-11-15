@@ -50,7 +50,7 @@ export async function Navigator({ searchParams }: { searchParams: SearchParams }
             <legend className="mb-2 text-sm font-medium">
               Sites{" "}
               <span className="text-muted">
-                (pick {MIN_SITES} or {MAX_SITES})
+                (pick {MIN_SITES} to {MAX_SITES})
               </span>
             </legend>
             {SITES.map((s) => (
@@ -166,16 +166,25 @@ export async function Navigator({ searchParams }: { searchParams: SearchParams }
             <span className="text-earth">Earth at or above {form.minEarthAltDeg}°</span>. Ranked by
             time with both, then by the shortest night.
           </p>
-          <div className="mt-4 overflow-x-auto">
-            <ScoreTable results={results} />
-          </div>
           {results
             .filter((r) => r.site.note)
             .map((r) => (
-              <p key={r.site.id} className="mt-3 text-xs text-muted">
-                <span className="text-danger">†</span> {displayName(r.site)}: {r.site.note}
-              </p>
+              <div
+                key={r.site.id}
+                role="note"
+                className="mt-4 rounded-md border border-danger/60 bg-danger/10 px-4 py-3 text-sm"
+              >
+                <p className="font-medium text-danger">
+                  † {displayName(r.site)}: the Sun numbers are a model artefact, not a real result.
+                </p>
+                <p className="mt-1 text-regolith/90">
+                  {r.site.note} Read its Sun and Both scores as an upper bound only.
+                </p>
+              </div>
             ))}
+          <div className="mt-4 overflow-x-auto">
+            <ScoreTable results={results} />
+          </div>
         </div>
 
         {results.map((r, i) => (
@@ -191,7 +200,7 @@ export async function Navigator({ searchParams }: { searchParams: SearchParams }
             </div>
             {r.site.note && (
               <p className="mb-2 text-xs text-danger">
-                † Read the note under the ranking before trusting this chart.
+                † Model artefact: see the warning above the ranking before trusting this chart.
               </p>
             )}
             <AltitudeChart
@@ -215,6 +224,8 @@ export async function Navigator({ searchParams }: { searchParams: SearchParams }
 function ScoreTable({ results }: { results: readonly SiteComparison[] }) {
   const th = "px-3 py-2 text-left text-xs font-medium uppercase tracking-wide";
   const td = "px-3 py-2.5 font-mono text-sm tabular-nums";
+  // "Best" never goes to a site whose numbers carry a warning.
+  const bestIndex = results.findIndex((r) => !r.site.note);
   return (
     <table className="w-full min-w-120 border-collapse">
       <caption className="sr-only">Site ranking by Sun and Earth visibility</caption>
@@ -239,24 +250,33 @@ function ScoreTable({ results }: { results: readonly SiteComparison[] }) {
       </thead>
       <tbody>
         {results.map(({ site, score }, i) => (
-          <tr key={site.id} className={`border-b border-line ${i === 0 ? "bg-surface" : ""}`}>
+          <tr
+            key={site.id}
+            className={`border-b border-line ${i === bestIndex ? "bg-surface" : ""}`}
+          >
             <th scope="row" className="px-3 py-2.5 text-left text-sm font-normal">
               <span className="mr-2 font-mono text-muted">{i + 1}</span>
               {displayName(site)}
               {site.note && (
-                <sup className="ml-0.5 text-danger" aria-label="see note below">
-                  †
-                </sup>
+                <span className="ml-2 rounded-sm border border-danger/60 px-1.5 py-0.5 text-[11px] uppercase tracking-wide text-danger">
+                  † Model artefact
+                </span>
               )}
-              {i === 0 && (
+              {i === bestIndex && (
                 <span className="ml-2 rounded-sm border border-regolith/40 px-1.5 py-0.5 text-[11px] uppercase tracking-wide text-regolith">
                   Best
                 </span>
               )}
             </th>
-            <td className={td}>{percent(score.sunFraction)}</td>
+            <td className={`${td} ${site.note ? "text-danger" : ""}`}>
+              {percent(score.sunFraction)}
+              {site.note && "†"}
+            </td>
             <td className={td}>{percent(score.earthFraction)}</td>
-            <td className={`${td} font-medium`}>{percent(score.bothFraction)}</td>
+            <td className={`${td} font-medium ${site.note ? "text-danger" : ""}`}>
+              {percent(score.bothFraction)}
+              {site.note && "†"}
+            </td>
             <td className={td}>{nightLength(score.longestNightHours)}</td>
           </tr>
         ))}

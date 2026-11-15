@@ -48,7 +48,7 @@ describe("parseComparisonForm", () => {
 
   it("falls back to defaults with a message for each invalid field", () => {
     const { form, errors } = parseComparisonForm(
-      { site: "malapert_candidate", start: "2026-13-40", days: "12", sun: "99", earth: "x" },
+      { site: "nope", start: "2026-13-40", days: "12", sun: "99", earth: "x" },
       today,
     );
     expect(form).toEqual({
@@ -58,7 +58,8 @@ describe("parseComparisonForm", () => {
       minSunAltDeg: 0,
       minEarthAltDeg: 0,
     });
-    expect(errors).toHaveLength(5);
+    // site: unknown id + no known site left; then start, days, sun, earth.
+    expect(errors).toHaveLength(6);
   });
 
   it("ignores unknown and duplicate site ids", () => {
@@ -70,16 +71,21 @@ describe("parseComparisonForm", () => {
     expect(errors).toEqual(["Unknown site ignored."]);
   });
 
-  it("rejects more than three sites", () => {
+  it("keeps any non-empty selection, from one site to all four", () => {
     const all = [
       "shackleton_rim",
       "malapert_candidate",
       "haworth_candidate",
       "peak_near_cabeus_b_candidate",
     ];
-    const { form, errors } = parseComparisonForm({ site: all }, today);
-    expect(form.siteIds).toEqual(DEFAULT_SITE_IDS);
-    expect(errors).toHaveLength(1);
+    expect(parseComparisonForm({ site: all }, today)).toMatchObject({
+      form: { siteIds: all },
+      errors: [],
+    });
+    expect(parseComparisonForm({ site: "haworth_candidate" }, today)).toMatchObject({
+      form: { siteIds: ["haworth_candidate"] },
+      errors: [],
+    });
   });
 });
 
