@@ -1,26 +1,38 @@
 @import "tailwindcss";
 
+/* Lunar night palette. Sun = amber, Earth = blue, used the same way everywhere. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --space: #0b0d10;
+  --surface: #14171c;
+  --line: #262b33;
+  --regolith: #e9e6df;
+  --muted: #9ba3ae;
+  --sun: #f4b23e;
+  --earth: #5fa8e8;
+  --danger: #f28b82;
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-space: var(--space);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-regolith: var(--regolith);
+  --color-muted: var(--muted);
+  --color-sun: var(--sun);
+  --color-earth: var(--earth);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--space);
+  color: var(--regolith);
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 2px solid var(--earth);
+  outline-offset: 2px;
 }
